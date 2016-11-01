@@ -1,0 +1,25 @@
+{
+  "name": "httpfluent",
+  "version": "0.0.0",
+  "description": "Fluent APIs for HTTP, no configuration needed.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jantosi/httpfluent.git"
+  },
+  "keywords": [
+    "http",
+    "rest",
+    "restful",
+    "fluent"
+  ],
+  "author": "Jakub Antosik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jantosi/httpfluent/issues"
+  },
+  "homepage": "https://github.com/jantosi/httpfluent#readme"
+}
