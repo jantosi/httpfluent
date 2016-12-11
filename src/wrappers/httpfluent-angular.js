@@ -1,3 +1,5 @@
+import {ChainableUrl} from '../ChainableUrl';
+
 angular.module('httpfluent', []);
 
 angular.module('httpfluent').service('Httpfluent', function ($http) {

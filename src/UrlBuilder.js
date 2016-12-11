@@ -3,7 +3,7 @@
 let URL_SEGMENTS_PROP = Symbol("urlSegments");
 let HTTP_METHODS_PROP = Symbol("httpMetods");
 
-class UrlBuilder {
+export class UrlBuilder {
 
     constructor(init, httpImpl) {
 
@@ -12,10 +12,21 @@ class UrlBuilder {
         }
 
         this[URL_SEGMENTS_PROP] = init != null ? [init] : [];
+
+        let httpMethodHandler = function (methodName) {
+            
+        };
+
         this[HTTP_METHODS_PROP] = {
             get: (body, queryParams, headers)=> {
                 return this[HTTP_METHODS_PROP].http(getUrl.call(this), 'GET', body, queryParams, headers);
             },
+
+            post: (body, queryParams, headers)=> {
+                return this[HTTP_METHODS_PROP].http(getUrl.call(this), 'POST', body, queryParams, headers);
+            },
+
+            //todo impl rest of the methods
 
             http: httpImpl
         };

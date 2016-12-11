@@ -1,18 +1,28 @@
 "use strict";
 
-function ChainableUrl(init = "", httpImpl) {
+import {UrlBuilder} from "./UrlBuilder";
+
+export function ChainableUrl(init = "", httpImpl) {
     function wrapInProxy(o) {
         return new Proxy(o, {
             get: function (target, name) {
                 if (name in o) {
+                    // end proxy recursion when hit a property on object
                     return o[name];
                 }
-                let wrapped = wrapInProxy(o.withUrlSegment(name));
-                return wrapped;
+
+                return wrapInProxy(o.withUrlSegment(name));
             },
         });
     }
 
-    let startingUrl = init.endsWith("/") ? init.substr(0, init.length - 1) : init;
-    return wrapInProxy(new UrlBuilder(startingUrl, httpImpl));
+    function getStartingUrl(s) {
+        return s.endsWith("/") ? s.substr(0, s.length - 1) : s;
+    }
+
+    return wrapInProxy(
+        new UrlBuilder(getStartingUrl(init),
+            httpImpl
+        )
+    );
 }

@@ -14,32 +14,27 @@
 </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js" crossorigin="anonymous"></script>
-
-<script src="../../lib/UrlBuilder.js"></script>
-<script src="../../lib/ChainableUrl.js"></script>
-
-<script src="../../lib/wrappers/httpfluent-angular.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
+<script src="../../dist/httpfluent-angular-bundled.js"></script>
 
 <script type="text/javascript">
-	 angular.module('demoApp', ['httpfluent'])
-      .controller('DemoController', function(Httpfluent) {
-        var demo = this;
-      
-        demo.response = null;
-   
-        Httpfluent("http://foaas.com").dosomething['turn off'].lights.everyone.get()
-        .then(function(r){
-          demo.response = r.data;
-        });
+    angular.module('demoApp', ['httpfluent'])
+        .controller('DemoController', function (Httpfluent) {
+            let demo = this;
 
-		    Httpfluent("http://foaas.com").cool.Pete.get()
-        .then(function(r){
-          demo.albums = r.data;
-        });
+            demo.response = null;
 
-    });
+            Httpfluent("http://foaas.com").dosomething['turn off'].lights.everyone.get()
+                .then(function (r) {
+                    demo.response = r.data;
+                });
+
+            Httpfluent("http://foaas.com").cool.Pete.get()
+                .then(function (r) {
+                    demo.albums = r.data;
+                });
+
+        });
      
 </script>
 </body>
