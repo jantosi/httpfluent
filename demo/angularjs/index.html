@@ -8,8 +8,8 @@
 
 <div ng-app="demoApp">
 	<div ng-controller="DemoController as demo">
-		{{ demo.response }}
-		{{ demo.albums}}
+		{{ demo.responseA }}
+		{{ demo.responseB }}
 	</div>
 </div>
 
@@ -26,12 +26,12 @@
 
             Httpfluent("http://foaas.com").dosomething['turn off'].lights.everyone.get()
                 .then(function (r) {
-                    demo.response = r.data;
+                    demo.responseA = r.data;
                 });
 
-            Httpfluent("http://foaas.com").cool.Pete.get()
+            Httpfluent("http://localhost:8000").demo.angularjs.test.delete()
                 .then(function (r) {
-                    demo.albums = r.data;
+                    demo.responseB = r.data;
                 });
 
         });

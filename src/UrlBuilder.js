@@ -1,45 +1,31 @@
 "use strict";
 
+import {HttpRequestInvoker} from "./HttpRequestInvoker";
+
+
 let URL_SEGMENTS_PROP = Symbol("urlSegments");
-let HTTP_METHODS_PROP = Symbol("httpMetods");
+let HTTP_METHODS_PROP = Symbol("httpMethods");
 
 export class UrlBuilder {
 
     constructor(init, httpImpl) {
-
-        function getUrl() {
-            return this[URL_SEGMENTS_PROP].join("/");
-        }
-
+        this.httpImpl = httpImpl;
+        this[HTTP_METHODS_PROP] = new HttpRequestInvoker(httpImpl);
         this[URL_SEGMENTS_PROP] = init != null ? [init] : [];
+    }
 
-        let httpMethodHandler = function (methodName) {
-            
-        };
-
-        this[HTTP_METHODS_PROP] = {
-            get: (body, queryParams, headers)=> {
-                return this[HTTP_METHODS_PROP].http(getUrl.call(this), 'GET', body, queryParams, headers);
-            },
-
-            post: (body, queryParams, headers)=> {
-                return this[HTTP_METHODS_PROP].http(getUrl.call(this), 'POST', body, queryParams, headers);
-            },
-
-            //todo impl rest of the methods
-
-            http: httpImpl
-        };
+    getUrl() {
+        return this[URL_SEGMENTS_PROP].join("/");
     }
 
     withUrlSegment(x) {
-        let result = new UrlBuilder(null, this[HTTP_METHODS_PROP].http);
+        let result = new UrlBuilder(null, this.httpImpl);
         result[URL_SEGMENTS_PROP] = this[URL_SEGMENTS_PROP].slice(0);
         result[URL_SEGMENTS_PROP].push(x);
 
-        if (this[HTTP_METHODS_PROP].hasOwnProperty(x)) {
+        if (x in this[HTTP_METHODS_PROP]) {
             let handler = function (...args) {
-                return this[HTTP_METHODS_PROP][x](...args);
+                return this[HTTP_METHODS_PROP][x](...args)(this.getUrl());
             };
             Object.setPrototypeOf(handler, result);
             return handler;

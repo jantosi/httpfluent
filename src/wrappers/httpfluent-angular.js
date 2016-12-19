@@ -5,7 +5,8 @@ angular.module('httpfluent', []);
 angular.module('httpfluent').service('Httpfluent', function ($http) {
 
     return function (initUrl) {
-        return new ChainableUrl(initUrl, (url, method, body, queryParams, headers)=> {
+
+        let httpImpl = (url, method, body, queryParams, headers) => {
             let config = {
                 url: url,
                 method: method,
@@ -14,9 +15,10 @@ angular.module('httpfluent').service('Httpfluent', function ($http) {
                 headers: headers
             };
 
-            let httpInstance = $http(config);
-            return httpInstance;
-        });
+            return $http(config);
+        };
+
+        return new ChainableUrl(initUrl, httpImpl);
     }
 
 });
