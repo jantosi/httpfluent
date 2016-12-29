@@ -1,8 +1,8 @@
 module.exports = {
-    entry: './wrappers/httpfluent-angular.js',
+    entry: './src/ChainableUrl.js',
     output: {
-        filename: 'httpfluent-angular-bundled.js',
-        path: '../dist'
+        filename: 'ChainableUrl-bundled.js',
+        path: './dist'
     },
     module: {
         loaders: [
